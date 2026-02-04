@@ -7,15 +7,37 @@ const dogImageURL = response?.message ?? errorimg;
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<h1>{title}</h1>
-		<img src={dogImageURL} alt="Random Dog" style="max-width: 400px; height: auto;"/>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <h1>{title}</h1>
+    <img
+      src={dogImageURL}
+      alt="Random Dog"
+      style="max-width: 400px; height: auto;"
+    />
+  </body>
+  <div>
+    <button id="catbutton">Get Cat Image!</button>
+    <img id="catimg" style="max-width: 400px; height: auto;" />
+  </div>
 </html>
+<script>
+  import { setupCatFactButton } from "./cat";
+  setupCatFactButton();
+  const button = document.getElementById("catbutton");
+  const imageEl = document.getElementById("catimg") as HTMLImageElement;
+
+  if (button && imageEl) {
+    button.addEventListener("click", async () => {
+      const res = await fetch("https://api.thecatapi.com/v1/images/search");
+      const data = await res.json();
+      imageEl.src = data[0].url;
+    });
+  }
+</script>
