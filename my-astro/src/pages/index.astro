@@ -1,5 +1,9 @@
 ---
 const title = "Hello World!";
+const errorimg = "https://redem.io/wp-content/uploads/2020/06/Redem-Error.jpeg";
+const res = await fetch("https://dog.ceo/api/breeds/image/random");
+const response = await res.json();
+const dogImageURL = response?.message ?? errorimg;
 ---
 
 <html lang="en">
@@ -12,5 +16,6 @@ const title = "Hello World!";
 	</head>
 	<body>
 		<h1>{title}</h1>
+		<img src={dogImageURL} alt="Random Dog" style="max-width: 400px; height: auto;"/>
 	</body>
 </html>
